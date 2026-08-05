@@ -28,14 +28,12 @@ const check = document.getElementById("check");
 //check the right input from forms and if its ok -> add the new book (object in array)
 //via Book function and start render function
 function submit() {
-  if (
-    title.value == "" ||
-    author.value == "" ||
-    pages.value == "" ||
-    isNaN(pages.value) ||
-    Number(pages.value) <= 0
-  ) {
+  if (title.value == "" || author.value == "" || pages.value == "") {
     alert("Please fill all fields!");
+    return false;
+  }
+  if (isNaN(pages.value) || Number(pages.value) <= 0) {
+    alert("Pages must be a positive number!");
     return false;
   } else {
     let book = new Book(title.value, author.value, pages.value, check.checked);
