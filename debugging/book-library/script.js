@@ -103,9 +103,14 @@ function render() {
     DeleteBtn.className = "btn btn-warning";
     DeleteBtn.textContent = "Delete";
     DeleteBtn.addEventListener("click", function () {
-      alert(`You've deleted title: ${myLibrary[i].title}`);
+      const deletedTitle = myLibrary[i].title;
       myLibrary.splice(i, 1);
       render();
+      const msg = document.createElement("div");
+      msg.className = "alert alert-success";
+      msg.textContent = `You've deleted title: ${deletedTitle}`;
+      document.body.prepend(msg);
+      setTimeout(() => msg.remove(), 3000);
     });
   }
 }
