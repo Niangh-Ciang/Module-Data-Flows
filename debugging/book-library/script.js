@@ -26,15 +26,13 @@ const checkInput = document.getElementById("check");
 
 //check the right input from forms and if its ok -> add the new book (object in array)
 //via Book function and start render function
-function submit() {
+document.getElementById("submitBtn").addEventListener("click", submit);
+function submit(event) {
+  event.preventDefault();
   const titleValue = titleInput.value.trim();
   const authorValue = authorInput.value.trim();
   const pagesValue = Number(pagesInput.value);
-  if (
-    titleValue === "" ||
-    authorValue === "" ||
-    pagesInput.value.trim() === ""
-  ) {
+  if (titleValue === "" || authorValue === "" || pagesValue <= 0) {
     alert("Please fill all fields!");
     return false;
   }
@@ -51,10 +49,7 @@ function submit() {
     );
     myLibrary.push(book);
     render();
-    titleInput.value = "";
-    authorInput.value = "";
-    pagesInput.value = "";
-    checkInput.checked = false;
+    document.getElementById("bookForm").reset();
     $("#demo").collapse("hide");
   }
 }
@@ -96,11 +91,11 @@ function render() {
     });
 
     //add delete button to every row and render again
-    const DeleteBtn = document.createElement("button");
-    deleteCell.appendChild(DeleteBtn);
-    DeleteBtn.className = "btn btn-warning";
-    DeleteBtn.textContent = "Delete";
-    DeleteBtn.addEventListener("click", function () {
+    const deleteBtn = document.createElement("button");
+    deleteCell.appendChild(deleteBtn);
+    deleteBtn.className = "btn btn-warning";
+    deleteBtn.textContent = "Delete";
+    deleteBtn.addEventListener("click", function () {
       const deletedTitle = myLibrary[i].title;
       myLibrary.splice(i, 1);
       render();
@@ -112,4 +107,3 @@ function render() {
     });
   }
 }
-window.submit = submit;
