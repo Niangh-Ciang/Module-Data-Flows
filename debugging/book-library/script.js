@@ -32,14 +32,14 @@ function submit(event) {
   const titleValue = titleInput.value.trim();
   const authorValue = authorInput.value.trim();
   const pagesValue = Number(pagesInput.value);
-  if (titleValue === "" || authorValue === "" || pagesValue <= 0) {
+  if (!titleValue || !authorValue) {
     alert("Please fill all fields!");
-    return false;
+    return;
   }
 
-  if (isNaN(pagesValue) || pagesValue <= 0) {
-    alert("Pages must be a positive number!");
-    return false;
+  if (!pagesValue || isNaN(pagesValue) || pagesValue <= 0) {
+    alert("Enter a valid page number");
+    return;
   } else {
     const book = new Book(
       titleValue,
@@ -62,14 +62,12 @@ function Book(title, author, pages, check) {
 }
 
 function render() {
-  const table = document.getElementById("display");
+  const tableBody = document.querySelector("#display tbody");
 
-  table.tBodies[0].innerHTML = "";
-
+  tableBody.innerHTML = "";
   //insert updated row and cells
-  const length = myLibrary.length;
-  for (let i = 0; i < length; i++) {
-    const row = table.insertRow(-1);
+  myLibrary.forEach((book, i) => {
+    const row = tableBody.insertRow();
     const titleCell = row.insertCell(0);
     const authorCell = row.insertCell(1);
     const pagesCell = row.insertCell(2);
@@ -105,5 +103,5 @@ function render() {
       document.body.prepend(msg);
       setTimeout(() => msg.remove(), 3000);
     });
-  }
+  });
 }
